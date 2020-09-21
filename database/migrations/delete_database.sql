@@ -1,0 +1,1 @@
+delete database "recette-api";
