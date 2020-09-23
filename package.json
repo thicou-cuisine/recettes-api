@@ -5,8 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "db:drop": "./database/drop.sh",
-    "db:seed": "./database/seed.sh && npx prisma introspect && yarn prisma generate",
+    "db:drop": "./database/drop-db.sh",
+    "db:create": "./database/create-db.sh",
+    "db:migrate": "./database/migrate-db.sh",
+    "db:client": "npx prisma introspect && yarn prisma generate",
+    "db:seed": "./database/seed-db.sh",
+    "db:start": "yarn db:create && yarn db:migrate && yarn db:client",
     "dev:start": "nodemon dist/index.js",
     "dev:build": "tsc --watch --preserveWatchOutput",
     "dev": "concurrently \"yarn:dev:build\" \"yarn:dev:start\"",
@@ -17,10 +21,19 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "2.7.1",
+    "@types/app-root-path": "^1.2.4",
+    "@types/pino": "^6.3.1",
+    "@types/pino-http": "^5.0.5",
+    "app-root-path": "^3.0.0",
     "dotenv": "^8.2.0",
     "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "helmet": "^4.1.1"
+    "helmet": "^4.1.1",
+    "morgan": "^1.10.0",
+    "pino": "^6.6.1",
+    "pino-http": "^5.3.0",
+    "pino-pretty": "^4.2.1",
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@prisma/cli": "2.7.1",

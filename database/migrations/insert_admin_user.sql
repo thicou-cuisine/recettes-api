@@ -1,2 +1,2 @@
-INSERT INTO "User" 
-VALUES ("thibz", "test@test.com"); 
+INSERT INTO "User" (name, email)
+VALUES ('thibz', 'test@test.com');
