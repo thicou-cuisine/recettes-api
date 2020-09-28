@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 
 // Create a user
-router.post("/create", async (req, res) => {
+router.post("/create", async (req : any, res : any) => {
   const { userName, userEmail} = req.body
   const newUser = await dbclient.user.create({
     data: {
@@ -12,7 +12,7 @@ router.post("/create", async (req, res) => {
       email: userEmail,
     },
   })
-  res.log.info(`User - create => `{userName, userEmail})
+  res.log.info(`User - create => `, `${userName} ${userEmail}`)
   return res.send(newUser).status(200)
 })
 

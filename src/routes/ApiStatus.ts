@@ -12,7 +12,7 @@ router.get('/api', (req: any, res: any) => {
 });
 
 router.get('/database', async (req: any, res: any) => {
-  const { stdout, stderr } = await exec(
+  const { stderr } = await exec(
     `pg_isready -d ${DATABASE_NAME} -h ${DATABASE_ADDRESS} -U ${DATABASE_USER} -p ${DATABASE_PORT}`
   );
   if (!stderr) return res.status(200).send('Database is fine');
