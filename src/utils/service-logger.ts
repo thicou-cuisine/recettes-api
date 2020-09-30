@@ -1,10 +1,12 @@
 import express from "express"
 import pinoHTTP from "pino-http"
 import pino from "pino"
+import config from './../config'
 
 const router = express.Router()
 
 router.use(pinoHTTP({
+  useLevel: process.env.NODE_ENV === 'test' ? 'silent' : config.LOG_LEVEL,
   logger: pino({
     prettyPrint: { colorize: true }
   }),
@@ -21,6 +23,7 @@ router.use(pinoHTTP({
       }
     },
     res: (res) => {
+      if (process.env.NODE_ENV === 'test') return
       return {
         At :`${new Date().toUTCString()} | ${Date.now()}`,
         Why : `${res.raw.req.originalUrl}`,
@@ -28,8 +31,7 @@ router.use(pinoHTTP({
       }
     },
   },
-  wrapSerializers: true,
-  useLevel: 'info',
+  wrapSerializers: true
 }))
 
 export default router

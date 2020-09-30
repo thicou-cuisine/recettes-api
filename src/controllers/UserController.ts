@@ -1,6 +1,6 @@
 import dbclient from "./../utils/database-connector"
+import express from "express"
 
-const express = require('express');
 const router = express.Router();
 
 // Create a user

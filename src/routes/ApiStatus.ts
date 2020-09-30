@@ -1,10 +1,10 @@
 import { promisify } from 'util';
 import AppConfig from './../config';
+import express from 'express'
 
 const exec = promisify(require('child_process').exec);
 
 const { DATABASE_NAME, DATABASE_PORT, DATABASE_ADDRESS, DATABASE_USER } = AppConfig;
-const express = require('express');
 const router = express.Router();
 
 router.get('/api', (req: any, res: any) => {
