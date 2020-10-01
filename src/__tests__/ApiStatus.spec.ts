@@ -1,6 +1,6 @@
-const rootPath = require('app-root-path');
-const request = require('supertest');
+import request from 'supertest'
 import app from './../app'
+
 process.env.APP_TEST='true'
 describe('Testing the Status API', () => {
   const server = request(app);

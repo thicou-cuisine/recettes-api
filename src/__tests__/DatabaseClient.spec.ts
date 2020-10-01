@@ -1,4 +1,4 @@
-import DatabaseClient from './../utils/database-connector';
+import DatabaseClient from './../database/database-client'
 
 describe('Testing the Database ORM', () => {
   it('checks if the connector actually works', async () => {

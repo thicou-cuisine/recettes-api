@@ -1,4 +1,4 @@
-import dbclient from "./../utils/database-connector"
+import dbclient from "./../database/database-client"
 import express from "express"
 
 const router = express.Router();
