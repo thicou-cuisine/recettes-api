@@ -21,6 +21,6 @@ app.disable('x-powered-by')
 app.use("/status", ApiStatus)
 
 // Controllers
-app.use("/user", userController)
+app.use("/users", userController)
 
 export default app

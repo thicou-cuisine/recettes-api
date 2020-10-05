@@ -11,7 +11,7 @@ User.init(
       unique: true,
       validate: { is: /^[0-9a-z_]+$/i, len: [1, 32] },
     },
-    userEmail: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
@@ -27,8 +27,7 @@ User.init(
   {
     modelName: 'User',
     sequelize: dbclient,
-    timestamps: true,
-    paranoid: true,
+    timestamps: true
   }
 );
 

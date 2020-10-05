@@ -12,9 +12,11 @@
     "db:client": "npx prisma introspect && yarn prisma generate",
     "db:seed": "./src/database/seed-db.sh",
     "db:start": "yarn db:create && yarn db:migrate && yarn db:client",
+    "db:reset": "yarn db:drop && yarn db:create && yarn db:migrate",
     "dev:watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
     "dev:build": "tsc --watch --preserveWatchOutput",
-    "dev": "concurrently \"yarn:dev:build\" \"yarn:dev:watch\" \"yarn test:watch\"",
+    "dev:kill": "./src/__tests__/kill-node-test-instance.sh",
+    "dev": "concurrently \"yarn:dev:build\" \"yarn:dev:watch\" \"cross-env NODE_ENV=test yarn test:watch\"",
     "sec:key": "node src/utils/generate-key"
   },
   "keywords": [],

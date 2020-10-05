@@ -4,7 +4,7 @@ import pino from 'pino';
 
 const logger = pino({ prettyPrint: { colorize: true } });
 const URL = process.env.NODE_ENV === 'test' ? config.DATABASE_TEST_URL : config.DATABASE_URL
-console.log(`connecting DB to ${URL}`)
+// console.log(`connecting DB to ${URL}`)
 const DatabaseClient = new Sequelize(URL, {
   logging: (msg) => {
     const isProd = process.env.NODE_ENV === 'production';
@@ -15,7 +15,7 @@ const DatabaseClient = new Sequelize(URL, {
     }
     if (isTest) return false;
     if (isProd) return false;
-        return logger.info(msg);
+    return logger.info(msg);
   },
 });
 
