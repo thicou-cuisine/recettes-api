@@ -3,9 +3,13 @@ import app from './../app'
 import User from './../models/User'
 
 const userData: any = {
-  userName: 'testman',
-  userEmail: 'test@test.com',
-  userPassword: 'Thisisatest123!!'
+  name: 'testman',
+  email: 'test@test.com',
+  password: 'Thisisatest123!!'
+}
+const createFakeUser = async () => {
+  const userInstance = await User.create(userData)
+  return userInstance
 }
 
 describe('It performs CRUD operations on User Model', () => {
@@ -13,22 +17,34 @@ describe('It performs CRUD operations on User Model', () => {
 
   it('Creates a User', async () => {
     const response = await server.post('/users/create/').send(userData)
-    expect(response.status).toBe(200)
+    expect(response.status).toEqual(200)
+  })
+
+  it('Reads a user', async () => {
+    await createFakeUser()
+    const response = await server.post(`/users/read`).send(userData.email)
+    expect(response.status).toEqual(200)
   })
 
   it('Deletes a user', async () => {
-    await User.create({
-      name: userData.userName,
-      email: userData.userEmail,
-      password: userData.userPassword
-    })
-    const response = await server.delete('/users/delete').send(userData)
-    expect(response.status).toBe(200)
+    await createFakeUser()
+    const response = await server.delete('/users/delete').send(userData.email)
+    expect(response.status).toEqual(200)
+  })
+
+  it('Updates a User', async () => {
+    await createFakeUser()
+    const response = await server
+      .put('/users/update')
+      .send({ email: userData.email, "new-name": 'Bob' })
+    const userInstance :any = await User.findOne({where : { email : userData.email }}) 
+    expect(userInstance.name).toEqual('Bob')
+    expect(response.status).toEqual(200)
   })
 })
 
 afterEach(async () => {
-  const testUser = await User.findOne({ where: { email: userData.userEmail } })
+  const testUser = await User.findOne({ where: { email: userData.email } })
   if (testUser) {
     await testUser.destroy()
   }
