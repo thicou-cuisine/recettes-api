@@ -6,9 +6,9 @@
   "scripts": {
     "test": "cross-env APP_TEST=true jest --detectOpenHandles --colors",
     "test:watch": "cross-env APP_TEST=true jest --detectOpenHandles --colors --watchAll",
-    "db:drop": "./src/database/drop-db.sh",
-    "db:create": "./src/database/create-db.sh",
-    "db:migrate": "ts-node ./src/database/migrate-db.ts",
+    "db:drop": "./src/database/drop-db.sh && ./src/database/drop-test-db.sh",
+    "db:create": "./src/database/create-db.sh && ./src/database/create-test-db.sh",
+    "db:migrate": "ts-node ./src/database/migrate-db.ts && cross-env NODE_ENV=test ts-node ./src/database/migrate-db.ts",
     "db:client": "npx prisma introspect && yarn prisma generate",
     "db:seed": "./src/database/seed-db.sh",
     "db:start": "yarn db:create && yarn db:migrate && yarn db:client",
