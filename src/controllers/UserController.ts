@@ -11,12 +11,19 @@ router.post('/create', async (req: any, res: any) => {
     return res.send('Invalid input').status(401)
   }
 
-  await User.create({
+  const newUser = await User.create({
     name,
     email,
     password
-  }).catch((err) => res.send('Invalid input').status(401))
-  res.log.info(`User - create => `, `${name} ${email}`)
+  }).catch((err: any) => {
+    req.log.error(`User - create failed`)
+    req.log.error(err)
+  })
+
+  if (!newUser) {
+    return res.send('Invalid Input').status(401)
+  }
+  req.log.info(`User - create => `, `${name} ${email}`)
 
   return res.send('User created').status(200)
 })
@@ -61,18 +68,17 @@ router.put('/update/', async (req: any, res: any) => {
   }
   await userInstance
     .save()
-    .catch((err: any) => res.send('Invalid Input').status(401))
+    .catch(() => res.send('Invalid Input').status(401))
   return res.send(userInstance).status(200)
 })
-
 
 router.post('/read', async (req: any, res: any) => {
   const { email } = req.body
   if (!email) {
     return res.send('Invalid Input').status(401)
   }
-  const userInstance = User.findOne({ where : { email } })
-  if ( !userInstance ) {
+  const userInstance = User.findOne({ where: { email } })
+  if (!userInstance) {
     return res.send('Invalid Input').status(401)
   }
   return res.send(userInstance).code(200)

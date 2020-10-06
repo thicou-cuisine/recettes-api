@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env APP_TEST=true jest --detectOpenHandles --colors",
-    "test:watch": "cross-env APP_TEST=true jest --detectOpenHandles --colors --watchAll",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --colors",
+    "test:watch": "cross-env NODE_ENV=test jest --detectOpenHandles --colors --watchAll",
     "db:drop": "./src/database/drop-db.sh && ./src/database/drop-test-db.sh",
     "db:create": "./src/database/create-db.sh && ./src/database/create-test-db.sh",
     "db:migrate": "ts-node ./src/database/migrate-db.ts && cross-env NODE_ENV=test ts-node ./src/database/migrate-db.ts",
@@ -16,7 +16,7 @@
     "dev:watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
     "dev:build": "tsc --watch --preserveWatchOutput",
     "dev:kill": "./src/__tests__/kill-node-test-instance.sh",
-    "dev": "concurrently \"yarn:dev:build\" \"yarn:dev:watch\" \"cross-env NODE_ENV=test yarn test:watch\"",
+    "dev": "concurrently \"yarn:dev:build\" \"yarn:dev:watch\"",
     "sec:key": "node src/utils/generate-key"
   },
   "keywords": [],
@@ -55,6 +55,7 @@
     "jest": "^26.4.2",
     "nodemon": "^2.0.4",
     "prettier": "^2.1.2",
+    "sequelize-cli": "^6.2.0",
     "supertest": "^4.0.2",
     "ts-jest": "^26.4.0",
     "ts-node": "^9.0.0",
