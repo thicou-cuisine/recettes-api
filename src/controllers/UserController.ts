@@ -1,10 +1,13 @@
 import express from 'express'
+import { Request, Response, NextFunction } from 'express';
 import User from './../models/User'
 
 const router = express.Router()
 
+// TODO : add a roles & permissions layer 
+
 // Create a user
-router.post('/create', async (req: any, res: any) => {
+router.post('/create', async (req: Request, res: Response) => {
   const { name, email, password } = req.body
 
   if (!name || !email || !password) {
@@ -29,7 +32,7 @@ router.post('/create', async (req: any, res: any) => {
 })
 
 // Deletes a user by email
-router.delete('/delete', async (req: any, res: any) => {
+router.delete('/delete', async (req: Request, res: Response) => {
   const { email } = req.body
 
   if (!email) {
@@ -39,7 +42,7 @@ router.delete('/delete', async (req: any, res: any) => {
 
   if (userInstance) {
     const action = await userInstance.destroy()
-    res.log.info(`User - destroy => `, `${action}`)
+    req.log.info(`User - destroy => `, `${action}`)
     return res.send('User deleted').status(200)
   }
 
@@ -47,7 +50,7 @@ router.delete('/delete', async (req: any, res: any) => {
 })
 
 // Update a user by email, pass 'new-${paramName}' to req.body
-router.put('/update/', async (req: any, res: any) => {
+router.put('/update/', async (req: Request, res: Response) => {
   const { email } = req.body
   if (!email) {
     return res.send('Invalid Input').status(401)
@@ -72,7 +75,7 @@ router.put('/update/', async (req: any, res: any) => {
   return res.send(userInstance).status(200)
 })
 
-router.post('/read', async (req: any, res: any) => {
+router.post('/read', async (req: Request, res: Response) => {
   const { email } = req.body
   if (!email) {
     return res.send('Invalid Input').status(401)
@@ -81,7 +84,7 @@ router.post('/read', async (req: any, res: any) => {
   if (!userInstance) {
     return res.send('Invalid Input').status(401)
   }
-  return res.send(userInstance).code(200)
+  return res.send(userInstance).status(200)
 })
 
 export default router

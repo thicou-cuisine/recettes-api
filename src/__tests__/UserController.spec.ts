@@ -1,16 +1,7 @@
 import request from 'supertest'
 import app from './../app'
 import User from './../models/User'
-
-const userData: any = {
-  name: 'testman',
-  email: 'test@test.com',
-  password: 'Thisisatest123!!'
-}
-const createFakeUser = async () => {
-  const userInstance = await User.create(userData)
-  return userInstance
-}
+import { destroyFakeUser, userData, createFakeUser } from './utils'
 
 describe('It performs CRUD operations on User Model', () => {
   const server = request(app)
@@ -44,8 +35,5 @@ describe('It performs CRUD operations on User Model', () => {
 })
 
 afterEach(async () => {
-  const testUser = await User.findOne({ where: { email: userData.email } })
-  if (testUser) {
-    await testUser.destroy()
-  }
+  destroyFakeUser()
 })

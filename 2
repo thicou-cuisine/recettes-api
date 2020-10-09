@@ -1,0 +1,8 @@
+PID=`lsof -P -iTCP | grep LISTEN | grep node | awk '{print $2}'`
+  if [-z $PID] 
+  then
+    break
+  else
+    kill -9 $PID
+  fi
+

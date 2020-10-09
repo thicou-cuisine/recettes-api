@@ -65,5 +65,6 @@
     /* Advanced Options */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": ["*.spec.ts", "src/__tests__/*.spec.ts"]
 }

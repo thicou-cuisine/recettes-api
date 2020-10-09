@@ -15,8 +15,8 @@
     "db:reset": "yarn db:drop && yarn db:create && yarn db:migrate",
     "dev:watch": "nodemon --watch \"src/**\" --ext \"ts,json\" --ignore \"src/**/*.spec.ts\" --exec \"ts-node src/index.ts\"",
     "dev:build": "tsc --watch --preserveWatchOutput",
-    "dev:kill": "./src/__tests__/kill-node-test-instance.sh",
-    "dev": "concurrently \"yarn:dev:build\" \"yarn:dev:watch\"",
+    "dev:kill": "./src/__tests__/utils/kill-node-test-instance.sh",
+    "dev": "yarn dev:kill && concurrently \"yarn:dev:build\" \"yarn:dev:watch\"",
     "sec:key": "node src/utils/generate-key"
   },
   "keywords": [],
@@ -26,6 +26,7 @@
     "@types/app-root-path": "^1.2.4",
     "@types/pino": "^6.3.1",
     "@types/pino-http": "^5.0.5",
+    "ajv": "^6.12.5",
     "app-root-path": "^3.0.0",
     "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
