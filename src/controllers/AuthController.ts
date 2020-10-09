@@ -7,6 +7,7 @@ router.post('/register', (req: Request, res: Response, next : NextFunction) => {
   // validate against a schema
   // register user
   // return response with jwt
+  return res.status(401).send()
 })
 
 export default router

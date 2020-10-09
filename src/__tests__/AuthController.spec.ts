@@ -4,29 +4,29 @@ import { userData } from './utils'
 
 describe('Can register a user', () => {
   const server = request(app)
+  const url = '/auth/register'
 
-  it('validates input completion', async () => {
-    let response
+  it('validates user input', async () => {
+    let response: any
     const emptyUserInput = {}
-    let badNameInput = userData
+    const badNameInput = userData
     userData.name = 'Bob Kelso'
-    let badPasswordInput = userData
+    const badPasswordInput = userData
     badPasswordInput.password = 'password'
-    let badEmailInput = userData
+    const badEmailInput = userData
     badEmailInput.email = `bollock""\t@killyourself.awawd`
 
-    response = await server.post('/register').send(emptyUserInput)
+    response = await server.post(url).send(emptyUserInput)
     expect(response.status).toEqual(401)
-    response = await server.post('/register').send(badNameInput)
+    response = await server.post(url).send(badNameInput)
     expect(response.status).toEqual(401)
-    response = await server.post('/register').send(badPasswordInput)
+    response = await server.post(url).send(badPasswordInput)
     expect(response.status).toEqual(401)
-    response = await server.post('/register').send(badEmailInput)
+    response = await server.post(url).send(badEmailInput)
     expect(response.status).toEqual(401)
-   
-    // TODO : return valid jwt token
-
-    response = await server.post('/register').send(userData)
-    expect(response.status).toEqual(200)
-
   })
+  it('Returns a valid JWT token', async () => {
+    const response = await server.post(url).send(userData)
+    expect(response.status).toEqual(200)
+  })
+})

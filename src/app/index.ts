@@ -3,6 +3,7 @@ import helmet from "helmet"
 import ServiceLogger from "./../utils/service-logger"
 import ApiStatus from "./../routes/ApiStatus"
 import userController from "./../controllers/UserController"
+import AuthController from "./../controllers/AuthController"
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use("/status", ApiStatus)
 
 // Controllers
 app.use("/users", userController)
+app.use("/auth", AuthController)
 
 export default app

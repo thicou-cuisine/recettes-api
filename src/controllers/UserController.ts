@@ -1,17 +1,17 @@
 import express from 'express'
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express'
 import User from './../models/User'
 
 const router = express.Router()
 
-// TODO : add a roles & permissions layer 
+// TODO : add a roles & permissions layer
 
 // Create a user
 router.post('/create', async (req: Request, res: Response) => {
   const { name, email, password } = req.body
 
   if (!name || !email || !password) {
-    return res.send('Invalid input').status(401)
+    return res.status(401).send('Invalid input')
   }
 
   const newUser = await User.create({
@@ -24,11 +24,11 @@ router.post('/create', async (req: Request, res: Response) => {
   })
 
   if (!newUser) {
-    return res.send('Invalid Input').status(401)
+    return res.status(401).send('Invalid Input')
   }
   req.log.info(`User - create => `, `${name} ${email}`)
 
-  return res.send('User created').status(200)
+  return res.status(200).send('User created')
 })
 
 // Deletes a user by email
@@ -36,29 +36,29 @@ router.delete('/delete', async (req: Request, res: Response) => {
   const { email } = req.body
 
   if (!email) {
-    return res.send('Invalid Input').status(401)
+    return res.status(401).send('Invalid Input')
   }
   const userInstance = await User.findOne({ where: { email } })
 
   if (userInstance) {
     const action = await userInstance.destroy()
     req.log.info(`User - destroy => `, `${action}`)
-    return res.send('User deleted').status(200)
+    return res.status(200).send('User deleted')
   }
 
-  return res.send('Invalid Input').status(401)
+  return res.status(401).send('Invalid Input')
 })
 
 // Update a user by email, pass 'new-${paramName}' to req.body
 router.put('/update/', async (req: Request, res: Response) => {
   const { email } = req.body
   if (!email) {
-    return res.send('Invalid Input').status(401)
+    return res.status(401).send('Invalid Input')
   }
   const userInstance: any = await User.findOne({ where: { email } })
 
   if (!userInstance) {
-    return res.send('Invalid Input').status(401)
+    return res.status(401).send('Invalid Input')
   }
   const keys = Object.keys(userInstance.dataValues)
   // console.log(userInstance)
@@ -69,22 +69,20 @@ router.put('/update/', async (req: Request, res: Response) => {
       userInstance[keys[item]] = req.body[prop]
     }
   }
-  await userInstance
-    .save()
-    .catch(() => res.send('Invalid Input').status(401))
-  return res.send(userInstance).status(200)
+  await userInstance.save().catch(() => res.status(401).send('Invalid Input'))
+  return res.status(200).send(userInstance)
 })
 
 router.post('/read', async (req: Request, res: Response) => {
   const { email } = req.body
   if (!email) {
-    return res.send('Invalid Input').status(401)
+    return res.status(401).send('Invalid Input')
   }
   const userInstance = User.findOne({ where: { email } })
   if (!userInstance) {
-    return res.send('Invalid Input').status(401)
+    return res.status(401).send('Invalid Input')
   }
-  return res.send(userInstance).status(200)
+  return res.status(200).send(userInstance)
 })
 
 export default router

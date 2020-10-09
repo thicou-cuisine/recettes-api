@@ -13,13 +13,17 @@ describe('It performs CRUD operations on User Model', () => {
 
   it('Reads a user', async () => {
     await createFakeUser()
-    const response = await server.post(`/users/read`).send(userData.email)
+    const response = await server
+      .post(`/users/read`)
+      .send({ email: userData.email })
     expect(response.status).toEqual(200)
   })
 
   it('Deletes a user', async () => {
     await createFakeUser()
-    const response = await server.delete('/users/delete').send(userData.email)
+    const response = await server
+      .delete('/users/delete')
+      .send({ email: userData.email })
     expect(response.status).toEqual(200)
   })
 
@@ -27,8 +31,10 @@ describe('It performs CRUD operations on User Model', () => {
     await createFakeUser()
     const response = await server
       .put('/users/update')
-      .send({ email: userData.email, "new-name": 'Bob' })
-    const userInstance :any = await User.findOne({where : { email : userData.email }}) 
+      .send({ email: userData.email, 'new-name': 'Bob' })
+    const userInstance: any = await User.findOne({
+      where: { email: userData.email }
+    })
     expect(userInstance.name).toEqual('Bob')
     expect(response.status).toEqual(200)
   })
