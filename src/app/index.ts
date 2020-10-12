@@ -4,6 +4,7 @@ import ServiceLogger from "./../utils/service-logger"
 import ApiStatus from "./../routes/ApiStatus"
 import userController from "./../controllers/UserController"
 import AuthController from "./../controllers/AuthController"
+import { NextFunction, Response, Request, Errback } from 'express'
 
 const app = express();
 
@@ -24,5 +25,11 @@ app.use("/status", ApiStatus)
 // Controllers
 app.use("/users", userController)
 app.use("/auth", AuthController)
+
+// Uncaught errors
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  req.log.error(err)
+  res.status(500).send('Oops')
+})
 
 export default app

@@ -3,7 +3,7 @@ import app from './../app'
 import User from './../models/User'
 import { destroyFakeUser, userData, createFakeUser } from './utils'
 
-describe('It performs CRUD operations on User Model', () => {
+describe('/USER/*', () => {
   const server = request(app)
 
   it('Creates a User', async () => {

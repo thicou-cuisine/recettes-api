@@ -13,7 +13,9 @@ const DatabaseClient = new Sequelize(URL, {
     if (isDebug) {
       return logger.info(msg);
     }
-    if (isTest) return false;
+    if (isTest) {
+      return logger.info(msg);
+    };
     if (isProd) return false;
     return logger.info(msg);
   },
